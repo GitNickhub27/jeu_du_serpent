@@ -55,27 +55,70 @@ class Jeu {
         constructor(jeuSerpent) {
             console.log("création du serpent");
            this.jeuSerpent = jeuSerpent;
+
+           this.currentX = -1;
+
+           this.currentY = 0;
+
+           this.prochainMovX = 1;
+
+           this.prochainMovY = 0;
+
+           this.SerpentLongueur = 1;
+
+           this.tblCarreSerpent = [];
+
+           this.vitesse = 250;
+           this.timing= setInterval(this.controleSerpent.bind(this), this.vitesse);
+           document.addEventListener("keydown",this.verifTouche.bind(this));
         }
 
 
 
     verifTouche(evt){
 
+    var evt = evt;
 
-
-
+  console.log(evt.keyCode);
+  this.deplacement(evt.keyCode);
     }
 
     deplacement(dirCode){
 
+      switch (dirCode){
 
+          case 37:
+              this.prochainMovX = -1;
+              this.prochainMovY = 0;
+              break;
+
+              case 38:
+              this.prochainMovX = 0;
+              this.prochainMovY = -1;
+              break;
+
+          case 39:
+              this.prochainMovX = 1;
+              this.prochainMovY = 0;
+              break;
+          case 40:
+              this.prochainMovX = 0;
+              this.prochainMovY = 1;
+              break;
+      }
+
+//console.log(this.prochainMovX, this.prochainMovY);
 
 
 
     }
     controleSerpent(){
+    var nextX = this.currentX + this.prochainMovX;
+    var nextY =this.currentY + this.prochainMovY;
 
-
+    this.dessineCarre(nextX,nextY);
+    this.currentX = nextX;
+    this.currentY = nextY;
     }
 
     dessineCarre(x,y){
