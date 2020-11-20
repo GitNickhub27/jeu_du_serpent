@@ -5,12 +5,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 class Jeu {
 
-    constructor() {
+    constructor(idSvg, idPointage) {
        console.log("création du jeu") ;
+
+       this.s = Snap(idSvg);
+
+   this.sortiPointage = document.querySelector(idPointage);
+
+   this.grandeurCarre = 20;
+
+   this.grandeurGrille = 15;
+
 
     }
 
+   nouvellePartie(){
+   this.affichagePointage(1);
+   this.Pomme = new Pomme();
+ this.serpent = new Serpent();
+    }
+    finPartie(){
 
+
+
+
+    }
+    affichagePointage(lePointage){
+    this.sortiPointage.innerHTML = lePointage;
+
+
+    }
 
 
 }
@@ -49,5 +73,17 @@ class Jeu {
     }
 
 
-    var unePartie = new Jeu();
+    var unePartie = new Jeu("#jeu", "#pointage");
+
+    var btnJouer = document.querySelector("#btnJouer");
+    btnJouer.addEventListener('click', nouvellePartie);
+
+    function nouvellePartie(){
+
+     unePartie.nouvellePartie();
+
+
+
+
+    }
 });
