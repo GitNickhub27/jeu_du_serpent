@@ -1,0 +1,19 @@
+{
+  "name": "jeu_duserpent",
+  "version": "1.0.0",
+  "description": "Jeu de serpent",
+  "main": "index.js",
+  "scripts": {
+    "test": "Test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitNickhub27/jeu_du_serpent.git"
+  },
+  "author": "Nickolas Laforest",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GitNickhub27/jeu_du_serpent/issues"
+  },
+  "homepage": "https://github.com/GitNickhub27/jeu_du_serpent#readme"
+}
