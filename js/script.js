@@ -24,16 +24,21 @@ class Jeu {
 
        this.finPartie();
    this.affichagePointage(1);
-   this.pomme = new Pomme(this);
+   this.Unepomme = new pomme(this);
  this.serpent = new Serpent(this);
     }
+
     finPartie(){
-        if(this.pomme !== undefined){
-            this.pomme.supprimePomme();
-            this.pomme = undefined;
+        if(this.Unepomme !== undefined){
+            this.Unepomme.supprimePomme();
+            this.Unepomme = undefined;
         }
 
+if(this.serpent !== undefined){
+    this.serpent.supprimeSerpent();
+    this.serpent = undefined;
 
+}
 
 
     }
@@ -64,9 +69,11 @@ class Jeu {
 
            this.prochainMovY = 0;
 
-           this.SerpentLongueur = 1;
+           this.serpentLongueur = 1;
 
            this.tblCarreSerpent = [];
+
+           this.touche = false;
 
            this.vitesse = 250;
            this.timing= setInterval(this.controleSerpent.bind(this), this.vitesse);
@@ -116,6 +123,31 @@ class Jeu {
     var nextX = this.currentX + this.prochainMovX;
     var nextY =this.currentY + this.prochainMovY;
 
+    this.tblCarreSerpent.forEach(function (element){
+        if(nextX === element[1] && nextY === element[2]){
+        console.log('touche moi-même')
+        this.jeuSerpent.finPartie();
+
+
+        this.touche = true;
+        }
+
+
+
+        }.bind(this))
+
+    if(nextY < 0 || nextX < 0 || nextY > this.jeuSerpent.grandeurGrille-1|| nextX > this.jeuSerpent.grandeurGrille-1){
+    console.log("Touche limites");
+    this.jeuSerpent.finPartie();
+     this.touche = true;
+    }
+    if(!this.touche)
+       if(this.currentX === this.jeuSerpent.Unepomme.grossePomme[1] && this.currentY === this.jeuSerpent.Unepomme.grossePomme[2]){
+          this.serpentLongueur++;
+          this.jeuSerpent.affichagePointage(this.serpentLongueur);
+          this.jeuSerpent.Unepomme.supprimePomme();
+          this.jeuSerpent.Unepomme.ajoutePomme();
+       }
     this.dessineCarre(nextX,nextY);
     this.currentX = nextX;
     this.currentY = nextY;
@@ -123,14 +155,30 @@ class Jeu {
 
     dessineCarre(x,y){
 
+ var unCarre = [this.jeuSerpent.s.rect(x * this.jeuSerpent.grandeurCarre, y * this.jeuSerpent.grandeurCarre, this.jeuSerpent.grandeurCarre,this.jeuSerpent.grandeurCarre).attr({fill:"darkgreen"}), x, y];
+
+ this.tblCarreSerpent.push(unCarre);
+
+    if(this.tblCarreSerpent.length > this.serpentLongueur){
+
+    this.tblCarreSerpent[0][0].remove();
+    this.tblCarreSerpent.shift();
 
 
+    }
     }
     supprimeSerpent(){
+    clearInterval(this.timing);
 
-
-
+    while(this.tblCarreSerpent.length > 0){
+     this.tblCarreSerpent[0][0].remove();
+     this.tblCarreSerpent.shift();
+     this.serpentLongueur = 0;
     }
+    }
+
+
+
 
 
     }
@@ -140,12 +188,12 @@ class Jeu {
 // la précédente.
 
 
-    class Pomme{
+    class pomme{
 
         constructor(lejeu) {
             console.log("création de la pomme");
         this.lejeu = lejeu;
-        this.pomme = [];
+        this.grossePomme = [];
         this.ajoutePomme();
         }
 
@@ -153,11 +201,11 @@ class Jeu {
         var posX = Math.floor(Math.random() * this.lejeu.grandeurGrille);
             var posY = Math.floor(Math.random() * this.lejeu.grandeurGrille);
 
-          this.pomme = [this.lejeu.s.rect(posX * this.lejeu.grandeurCarre, posY * this.lejeu.grandeurCarre, this.lejeu.grandeurCarre, this.lejeu.grandeurCarre).attr({fill:"red"}), posX,posY];
+          this.grossePomme = [this.lejeu.s.rect(posX * this.lejeu.grandeurCarre, posY * this.lejeu.grandeurCarre, this.lejeu.grandeurCarre, this.lejeu.grandeurCarre).attr({fill:"red"}), posX,posY];
 
         }
         supprimePomme(){
-         this.pomme[0].remove();
+         this.grossePomme[0].remove();
 
 
         }
