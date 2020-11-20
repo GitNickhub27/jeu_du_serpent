@@ -20,11 +20,18 @@ class Jeu {
     }
 
    nouvellePartie(){
+
+
+       this.finPartie();
    this.affichagePointage(1);
-   this.Pomme = new Pomme();
- this.serpent = new Serpent();
+   this.pomme = new Pomme(this);
+ this.serpent = new Serpent(this);
     }
     finPartie(){
+        if(this.pomme !== undefined){
+            this.pomme.supprimePomme();
+            this.pomme = undefined;
+        }
 
 
 
@@ -45,12 +52,42 @@ class Jeu {
 
     class Serpent {
 
-        constructor() {
+        constructor(jeuSerpent) {
             console.log("création du serpent");
-
+           this.jeuSerpent = jeuSerpent;
         }
 
 
+
+    verifTouche(evt){
+
+
+
+
+    }
+
+    deplacement(dirCode){
+
+
+
+
+
+    }
+    controleSerpent(){
+
+
+    }
+
+    dessineCarre(x,y){
+
+
+
+    }
+    supprimeSerpent(){
+
+
+
+    }
 
 
     }
@@ -60,19 +97,32 @@ class Jeu {
 // la précédente.
 
 
-    class Pomme {
+    class Pomme{
 
-        constructor() {
+        constructor(lejeu) {
             console.log("création de la pomme");
+        this.lejeu = lejeu;
+        this.pomme = [];
+        this.ajoutePomme();
+        }
+
+        ajoutePomme(){
+        var posX = Math.floor(Math.random() * this.lejeu.grandeurGrille);
+            var posY = Math.floor(Math.random() * this.lejeu.grandeurGrille);
+
+          this.pomme = [this.lejeu.s.rect(posX * this.lejeu.grandeurCarre, posY * this.lejeu.grandeurCarre, this.lejeu.grandeurCarre, this.lejeu.grandeurCarre).attr({fill:"red"}), posX,posY];
+
+        }
+        supprimePomme(){
+         this.pomme[0].remove();
+
 
         }
 
-
-
-
     }
 
-
+// Code permettant de créér une nouvelle partie et d'appeler la fonction nouvellePartie() qui commence la nouvelle
+// partie.
     var unePartie = new Jeu("#jeu", "#pointage");
 
     var btnJouer = document.querySelector("#btnJouer");
